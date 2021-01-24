@@ -61,6 +61,13 @@ const FORM_DEFAULTS = {
   webhook: {
     url: '',
   },
+  stripePayments: {
+    stripeAccount: null,
+    lineItem: {
+      name: null,
+      amount: null,
+    },
+  },
   status: 'PRIVATE',
 }
 

@@ -2,6 +2,7 @@
 const dedent = require('dedent-js')
 const { get, set, isEqual } = require('lodash')
 
+// paths for the $scope.tempForm variable
 const SETTINGS_PATH = [
   'title',
   'emails',
@@ -13,6 +14,7 @@ const SETTINGS_PATH = [
   'inactiveMessage',
   'webhook.url',
   'stripePayments.stripeAccount',
+  'stripePayments.lineItem.name',
 ]
 
 const createTempSettings = (myform) => {
@@ -65,13 +67,11 @@ function settingsFormDirective(
           let tempForm = $scope.tempForm
           let myform = $scope.myform
           let updatedSettings = {}
-
           SETTINGS_PATH.forEach((name) => {
             if (!isEqual(get(tempForm, name), get(myform, name))) {
               set(updatedSettings, name, get(tempForm, name))
             }
           })
-
           // Special case for email: myform.email is single-element array with string,
           // while tempform.email originally follows myform.email format but transforms
           // into just a string when the field is edited. This makes isEqual incorrectly falsy.

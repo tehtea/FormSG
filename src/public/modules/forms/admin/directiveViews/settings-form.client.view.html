@@ -380,11 +380,9 @@
             >Payments cannot be changed unless your form is deactivated.</span
           >
         </div>
+        <!-- Stripe Account ID -->
         <div class="row feature-container">
-          <div
-            class="settings-save col-xs-12"
-            ng-class="(settingsForm.webhookUrl.$invalid) ? 'input-disabled' : ''"
-          >
+          <div class="settings-save col-xs-12">
             <label for="settings-stripe-account"
               >Connected Stripe Account ID</label
             >
@@ -412,6 +410,26 @@
                 Please enter a valid Stripe Account ID (starting with acct_)
               </span>
             </div>
+          </div>
+        </div>
+        <!-- Line item name -->
+        <div class="row feature-container">
+          <div class="settings-save col-xs-12">
+            <label for="settings-stripe-line-item">Line Item</label>
+            <input
+              class="input-custom input-medium"
+              id="settings-stripe-line-item"
+              type="text"
+              name="stripeLineItemName"
+              ng-model="tempForm.stripePayments.lineItem.name"
+              placeholder="Name of the line item for billing"
+              ng-required="false"
+              ng-disabled="isFormPublic()"
+              autocomplete="off"
+              ng-keyup="$event.keyCode === 13 && settingsForm.stripeLineItemName.$valid && saveForm()"
+              ng-blur="saveForm()"
+              ng-class="settingsForm.stripeLineItemName.$valid ? '' : 'input-error'"
+            />
           </div>
         </div>
       </div>

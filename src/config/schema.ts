@@ -97,6 +97,15 @@ export const compulsoryVarsSchema: Schema<ICompulsoryVarsSchema> = {
       sensitive: true,
     },
   },
+  payments: {
+    stripeSecretKey: {
+      doc: 'Stripe secret key',
+      format: String,
+      default: null,
+      env: 'STRIPE_SECRET_KEY',
+      sensitive: true,
+    },
+  },
 }
 
 // If the following environment variables are not specified, we will fall back to the defaults provided

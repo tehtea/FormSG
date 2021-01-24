@@ -97,6 +97,9 @@ export interface ICompulsoryVarsSchema {
     logoS3Bucket: string
     attachmentS3Bucket: string
   }
+  payments: {
+    stripeSecretKey: string
+  }
 }
 
 export interface IOptionalVarsSchema {

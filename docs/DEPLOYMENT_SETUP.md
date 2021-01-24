@@ -212,6 +212,13 @@ SITE_BANNER_CONTENT=hello:This is an invalid banner type, and the full text will
 | `CHROMIUM_BIN`        | Filepath to chromium binary. Required for email autoreply PDF generation with Puppeteer.                                                                                                                             |
 | `BOUNCE_LIFE_SPAN`    | Time in milliseconds that bounces are tracked for each form. Defaults to 86400000ms or 24 hours. Only relevant if you have set up AWS to send bounce and delivery notifications to the /emailnotifications endpoint. |
 
+#### Stripe Payments
+
+The app integrates with Stripe via their Connect API
+| Variable | Description |
+| :-------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `STRIPE_SECRET_KEY` | Secret key for Stripe |
+
 #### Rate limits at specific endpoints
 
 The app applies per-minute, per-IP rate limits at specific API endpoints as a security measure. The limits can be specified with the following environment variables.

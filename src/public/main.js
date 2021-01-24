@@ -249,6 +249,7 @@ require('./modules/forms/base/directives/validate-email-domain.client.directive.
 require('./modules/forms/base/directives/validate-email-format.client.directive.js')
 require('./modules/forms/base/directives/validate-nric.client.directive.js')
 require('./modules/forms/base/directives/validate-url.client.directive.js')
+require('./modules/forms/base/directives/validate-stripe.client.directive.js')
 require('./modules/forms/base/directives/ng-intl-tel-input.js')
 require('./modules/forms/base/directives/submit-form.directive.js')
 

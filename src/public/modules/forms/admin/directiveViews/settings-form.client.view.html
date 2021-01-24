@@ -401,7 +401,7 @@
               ng-keyup="$event.keyCode === 13 && settingsForm.stripeAccount.$valid && saveForm()"
               ng-blur="saveForm()"
               ng-class="settingsForm.stripeAccount.$valid ? '' : 'input-error'"
-              validate-url
+              validate-stripe-account-id
             />
             <div
               class="alert-custom alert-error"

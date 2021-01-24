@@ -296,7 +296,7 @@ const compileFormModel = (db: Mongoose): IFormModel => {
             type: String,
             default: null,
           },
-          // SGD
+          // Singapore cents
           amount: {
             type: Number,
             default: null,

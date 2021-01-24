@@ -371,10 +371,7 @@
             <span class="field-optional">(optional)</span>
           </span>
         </div>
-        <div
-          ng-if="isFormPublic()"
-          class="alert-custom alert-info spcp-warning"
-        >
+        <div ng-if="isFormPublic()" class="alert-custom alert-info">
           <i class="bx bx-info-circle bx-md icon-spacing"></i>
           <span class="alert-msg"
             >Payments cannot be changed unless your form is deactivated.</span
@@ -415,10 +412,10 @@
         <!-- Line item name -->
         <div class="row feature-container">
           <div class="settings-save col-xs-12">
-            <label for="settings-stripe-line-item">Line Item</label>
+            <label for="settings-stripe-line-item-name">Line Item</label>
             <input
               class="input-custom input-medium"
-              id="settings-stripe-line-item"
+              id="settings-stripe-line-item-name"
               type="text"
               name="stripeLineItemName"
               ng-model="tempForm.stripePayments.lineItem.name"
@@ -430,6 +427,37 @@
               ng-blur="saveForm()"
               ng-class="settingsForm.stripeLineItemName.$valid ? '' : 'input-error'"
             />
+          </div>
+        </div>
+        <!-- Line item name -->
+        <div class="row feature-container">
+          <div class="settings-save col-xs-12">
+            <label for="settings-stripe-line-item-amount"
+              >Amount to charge in Singapore cents</label
+            >
+            <input
+              class="input-custom input-medium"
+              id="settings-stripe-line-item-amount"
+              type="number"
+              min="1"
+              step="1"
+              name="stripeLineItemAmount"
+              ng-model="tempForm.stripePayments.lineItem.amount"
+              placeholder="Amount to bill in Singapore dollars"
+              ng-required="false"
+              ng-disabled="isFormPublic()"
+              autocomplete="off"
+              ng-keyup="$event.keyCode === 13 && settingsForm.stripeLineItemAmount.$valid && saveForm()"
+              ng-blur="saveForm()"
+              ng-class="settingsForm.stripeLineItemAmount.$valid ? '' : 'input-error'"
+            />
+            <div
+              class="alert-custom alert-error"
+              ng-if="settingsForm.stripeLineItemAmount.$invalid"
+            >
+              <i class="bx bx-exclamation bx-md icon-spacing"></i>
+              <span class="alert-msg">Please enter a valid amount.</span>
+            </div>
           </div>
         </div>
       </div>

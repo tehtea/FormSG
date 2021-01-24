@@ -15,6 +15,7 @@ const SETTINGS_PATH = [
   'webhook.url',
   'stripePayments.stripeAccount',
   'stripePayments.lineItem.name',
+  'stripePayments.lineItem.amount',
 ]
 
 const createTempSettings = (myform) => {

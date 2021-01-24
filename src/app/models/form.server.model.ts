@@ -284,6 +284,25 @@ const compileFormModel = (db: Mongoose): IFormModel => {
           },
         },
       },
+      // Payments
+      stripePayments: {
+        stripeAccount: {
+          type: String,
+          default: null,
+        },
+        lineItem: {
+          // Name of item being purchased
+          name: {
+            type: String,
+            default: null,
+          },
+          // SGD
+          amount: {
+            type: Number,
+            default: null,
+          },
+        },
+      },
 
       msgSrvcName: {
         // Name of credentials for messaging service, stored in secrets manager

@@ -12,6 +12,7 @@ const SETTINGS_PATH = [
   'responseMode',
   'inactiveMessage',
   'webhook.url',
+  'stripePayments.stripeAccount',
 ]
 
 const createTempSettings = (myform) => {

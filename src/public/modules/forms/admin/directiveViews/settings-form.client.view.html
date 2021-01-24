@@ -354,6 +354,67 @@
           </div>
         </div>
       </div>
+
+      <div class="settings-divider feature-divider"></div>
+
+      <!-- Stripe payments for encrypted forms -->
+      <div ng-if="isFormEncrypt()">
+        <div class="row enable-features">
+          <span class="col-xs-9 label-custom label-large">
+            Stripe Payments
+            <span class="beta-icon"> beta </span>
+            <i
+              class="glyphicon glyphicon-question-sign"
+              uib-tooltip="Form submitters will be directed to submit payment via the Stripe Connect API."
+              tooltip-trigger="'click mouseenter'"
+            ></i>
+            <span class="field-optional">(optional)</span>
+          </span>
+        </div>
+        <div
+          ng-if="isFormPublic()"
+          class="alert-custom alert-info spcp-warning"
+        >
+          <i class="bx bx-info-circle bx-md icon-spacing"></i>
+          <span class="alert-msg"
+            >Payments cannot be changed unless your form is deactivated.</span
+          >
+        </div>
+        <div class="row feature-container">
+          <div
+            class="settings-save col-xs-12"
+            ng-class="(settingsForm.webhookUrl.$invalid) ? 'input-disabled' : ''"
+          >
+            <label for="settings-stripe-account"
+              >Connected Stripe Account ID</label
+            >
+            <input
+              class="input-custom input-medium"
+              id="settings-stripe-account"
+              type="text"
+              name="stripeAccount"
+              ng-model="tempForm.stripePayments.stripeAccount"
+              placeholder="acct_..."
+              ng-required="false"
+              ng-disabled="isFormPublic()"
+              autocomplete="off"
+              ng-keyup="$event.keyCode === 13 && settingsForm.stripeAccount.$valid && saveForm()"
+              ng-blur="saveForm()"
+              ng-class="settingsForm.stripeAccount.$valid ? '' : 'input-error'"
+              validate-url
+            />
+            <div
+              class="alert-custom alert-error"
+              ng-if="settingsForm.stripeAccount.$invalid"
+            >
+              <i class="bx bx-exclamation bx-md icon-spacing"></i>
+              <span class="alert-msg">
+                Please enter a valid Stripe Account ID (starting with acct_)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

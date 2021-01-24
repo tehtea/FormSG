@@ -449,6 +449,17 @@ const compileFormModel = (db: Mongoose): IFormModel => {
     return this.save()
   }
 
+  // Checks if payments is enabled on form
+  FormSchema.methods.isStripePaymentsEnabled = function (
+    this: IFormDocument,
+  ): boolean {
+    return Boolean(
+      this.stripePayments?.stripeAccount &&
+        this.stripePayments?.lineItem.name &&
+        this.stripePayments?.lineItem.amount,
+    )
+  }
+
   // Statics
   // Method to retrieve data for OTP verification
   FormSchema.statics.getOtpData = async function (

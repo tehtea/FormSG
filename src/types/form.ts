@@ -72,6 +72,14 @@ export type Webhook = {
   url: string
 }
 
+export type FormStripePayment = {
+  stripeAccount?: string
+  lineItem: {
+    name?: string
+    amount?: number
+  }
+}
+
 /**
  * Typing for duplicate form with specific keys.
  */
@@ -104,6 +112,7 @@ export interface IForm {
   isListed?: boolean
   esrvcId?: string
   webhook?: Webhook
+  stripePayments?: FormStripePayment
   msgSrvcName?: string
 
   responseMode: ResponseMode
@@ -150,6 +159,10 @@ export interface IFormSchema extends IForm, Document {
   getDuplicateParams(
     overrideProps: OverrideProps,
   ): PickDuplicateForm & OverrideProps
+  /**
+   * Checks if the form has all the necessary information for payments
+   */
+  isStripePaymentsEnabled(): boolean
 }
 
 /**
@@ -170,6 +183,7 @@ export interface IFormDocument extends IFormSchema {
     'title' | 'buttonText'
   >
   webhook: SetRequired<NonNullable<IFormSchema['webhook']>, 'url'>
+  stripePayments: IFormSchema['stripePayments']
 }
 export interface IPopulatedForm extends Omit<IFormDocument, 'toJSON'> {
   // Remove extraneous keys that the populated form should not require.

@@ -148,6 +148,7 @@
     "selectize": "0.12.6",
     "slick-carousel": "1.8.1",
     "sortablejs": "~1.12.0",
+    "stripe": "^8.132.0",
     "text-encoding": "^0.7.0",
     "toastr": "^2.1.4",
     "triple-beam": "^1.3.0",

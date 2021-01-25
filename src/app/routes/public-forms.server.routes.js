@@ -19,6 +19,8 @@ const SpcpController = require('../modules/spcp/spcp.controller')
 const { BasicField } = require('../../types')
 const EmailSubmissionsMiddleware = require('../../app/modules/submission/email-submission/email-submission.middleware')
 const EncryptSubmissionMiddleware = require('../modules/submission/encrypt-submission/encrypt-submission.middleware')
+const stripeMiddleware = require('../modules/stripe-payments/stripe-payments.middleware')
+
 module.exports = function (app) {
   /**
    * Redirect a form to the main index, with the specified path
@@ -282,6 +284,7 @@ module.exports = function (app) {
     EncryptSubmissionMiddleware.prepareEncryptSubmission,
     encryptSubmissions.saveResponseToDb,
     webhookVerifiedContentFactory.post,
+    stripeMiddleware.createCheckoutSession,
     SubmissionsMiddleware.sendEmailConfirmations,
   )
 }

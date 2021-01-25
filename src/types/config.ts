@@ -51,6 +51,10 @@ export type RateLimitConfig = {
   sendAuthOtp: number
 }
 
+export type PaymentConfig = {
+  stripeSecretKey: string
+}
+
 export type Config = {
   app: AppConfig
   db: DbConfig
@@ -74,7 +78,7 @@ export type Config = {
   siteBannerContent: string
   adminBannerContent: string
   rateLimitConfig: RateLimitConfig
-
+  payments: PaymentConfig
   // Functions
   configureAws: () => Promise<void>
 }
@@ -97,9 +101,7 @@ export interface ICompulsoryVarsSchema {
     logoS3Bucket: string
     attachmentS3Bucket: string
   }
-  payments: {
-    stripeSecretKey: string
-  }
+  payments: PaymentConfig
 }
 
 export interface IOptionalVarsSchema {

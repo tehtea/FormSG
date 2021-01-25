@@ -217,6 +217,7 @@ const config: Config = {
   siteBannerContent: basicVars.banner.siteBannerContent,
   adminBannerContent: basicVars.banner.adminBannerContent,
   rateLimitConfig: basicVars.rateLimit,
+  payments: basicVars.payments,
   configureAws,
 }
 

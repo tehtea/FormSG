@@ -69,6 +69,7 @@ services:
       - IS_CP_MAINTENANCE
       - AGGREGATE_COLLECTION
       - STRIPE_SECRET_KEY
+      - STRIPE_PUBLISHABLE_KEY
 
   mockpass:
     build: https://github.com/opengovsg/mockpass.git

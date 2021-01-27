@@ -21,3 +21,4 @@ AWS_ENDPOINT=http://localhost:4566
 APP_URL=https://example.com
 
 STRIPE_SECRET_KEY=sk_test_blablabla
+STRIPE_PUBLISHABLE_KEY=pk_test_blablabla

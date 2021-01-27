@@ -12,6 +12,7 @@ const frontendVars = {
   adminBannerContent: config.adminBannerContent,
   logoBucketUrl: config.aws.logoBucketUrl, // S3 bucket
   formsgSdkMode: config.formsgSdkMode,
+  stripePublishableKey: config.payments.stripePublishableKey,
   captchaPublicKey: get(
     featureManager.props(FeatureNames.Captcha),
     'captchaPublicKey',
@@ -64,6 +65,8 @@ const environment = ejs.render(
     var formsgSdkMode = "<%= formsgSdkMode%>"
     // SPCP Cookie
     var spcpCookieDomain = "<%= spcpCookieDomain%>"
+    // Stripe
+    var stripePublishableKey = "<%= stripePublishableKey%>"
   `,
   frontendVars,
 )

@@ -53,6 +53,7 @@ export type RateLimitConfig = {
 
 export type PaymentConfig = {
   stripeSecretKey: string
+  stripePublishableKey: string
 }
 
 export type Config = {

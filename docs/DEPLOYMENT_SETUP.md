@@ -218,6 +218,7 @@ The app integrates with Stripe via their Connect API
 | Variable | Description |
 | :-------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `STRIPE_SECRET_KEY` | Secret key for Stripe |
+| `STRIPE_PUBLISHABLE_KEY` | Publishable key for Stripe |
 
 #### Rate limits at specific endpoints
 

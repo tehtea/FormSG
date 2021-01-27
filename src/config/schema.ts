@@ -105,6 +105,13 @@ export const compulsoryVarsSchema: Schema<ICompulsoryVarsSchema> = {
       env: 'STRIPE_SECRET_KEY',
       sensitive: true,
     },
+    stripePublishableKey: {
+      doc: 'Stripe publishable key',
+      format: String,
+      default: null,
+      env: 'STRIPE_PUBLISHABLE_KEY',
+      sensitive: true,
+    },
   },
 }
 

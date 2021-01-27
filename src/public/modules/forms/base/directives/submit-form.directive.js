@@ -64,6 +64,7 @@ function submitFormDirective(
       form: '=',
       logoUrl: '<',
       myInfoError: '<',
+      stripePayment: '<',
       disableSubmitButton: '<',
     },
     link: function (scope, _element, _attrs, _ctrl) {

@@ -22,6 +22,7 @@ function SubmitFormController(FormData, SpcpSession, $window, $document, GTag) {
   vm.myform.isTemplate = Boolean(FormData.isTemplate)
   vm.myform.isPreview = Boolean(FormData.isPreview)
   vm.myInfoError = Boolean(FormData.myInfoError)
+  vm.stripePayment = FormData.stripePayment
   vm.logoUrl = getFormLogo(vm.myform)
 
   // Show banner content if available

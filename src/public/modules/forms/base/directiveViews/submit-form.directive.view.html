@@ -55,7 +55,9 @@
             ng-click="checkCaptchaAndSubmit()"
             ng-class="uiState.submitButtonClicked ? 'btn-pressed' : ''"
           >
-            <span ng-if="!uiState.submitButtonClicked">Submit</span>
+            <span ng-if="!uiState.submitButtonClicked"
+              >{{ stripePayment ? 'Proceed to payment' : 'Submit'}}</span
+            >
             <span ng-if="uiState.submitButtonClicked"
               ><i class="bx bx-loader bx-spin bx-lg"></i
             ></span>

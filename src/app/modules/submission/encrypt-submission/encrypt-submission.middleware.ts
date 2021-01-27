@@ -108,11 +108,15 @@ export const sendEmailConfirmations: RequestHandler<
     attachments,
     autoReplyData,
     submission,
+    stripeCheckoutSession,
   } = req as WithAutoReplyEmailData<typeof req>
   // Return the reply early to the submitter
   res.json({
     message: 'Form submission successful.',
     submissionId: submission.id,
+    stripeCheckoutSessionId: stripeCheckoutSession
+      ? stripeCheckoutSession.id
+      : null,
   })
   return SubmissionService.sendEmailConfirmations({
     form,

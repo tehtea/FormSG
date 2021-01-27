@@ -51,12 +51,14 @@ const helmetMiddlewares = () => {
       'https://www.gstatic.com/recaptcha/',
       'https://www.gstatic.cn/',
       'https://www.google-analytics.com/',
+      'https://js.stripe.com',
     ],
     connectSrc: [
       "'self'",
       'https://www.google-analytics.com/',
       'https://ssl.google-analytics.com/',
       'https://sentry.io/api/',
+      'https://api.stripe.com',
       config.aws.attachmentBucketUrl, // Attachment downloads
       config.aws.imageBucketUrl, // Image field
       config.aws.logoBucketUrl, // Form logo
@@ -65,6 +67,8 @@ const helmetMiddlewares = () => {
       "'self'",
       'https://www.google.com/recaptcha/',
       'https://www.recaptcha.net/recaptcha/',
+      'https://js.stripe.com',
+      'https://hooks.stripe.com',
     ],
     objectSrc: ["'none'"],
     styleSrc: [

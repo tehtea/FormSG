@@ -11,7 +11,6 @@ const { celebrate, Joi, Segments } = require('celebrate')
 const webhookVerifiedContentFactory = require('../factories/webhook-verified-content.factory')
 const { CaptchaFactory } = require('../services/captcha/captcha.factory')
 const CaptchaMiddleware = require('../services/captcha/captcha.middleware')
-const SubmissionsMiddleware = require('../../app/modules/submission/submission.middleware')
 const { limitRate } = require('../utils/limit-rate')
 const { rateLimitConfig } = require('../../config/config')
 const PublicFormController = require('../modules/form/public-form/public-form.controller')
@@ -205,7 +204,7 @@ module.exports = function (app) {
     EmailSubmissionsMiddleware.prepareEmailSubmission,
     EmailSubmissionsMiddleware.saveMetadataToDb,
     EmailSubmissionsMiddleware.sendAdminEmail,
-    SubmissionsMiddleware.sendEmailConfirmations,
+    EmailSubmissionsMiddleware.sendEmailConfirmations,
   )
 
   /**
@@ -285,6 +284,6 @@ module.exports = function (app) {
     encryptSubmissions.saveResponseToDb,
     webhookVerifiedContentFactory.post,
     stripeMiddleware.createCheckoutSession,
-    SubmissionsMiddleware.sendEmailConfirmations,
+    EncryptSubmissionMiddleware.sendEmailConfirmations,
   )
 }

@@ -1,11 +1,18 @@
 import { RequestHandler } from 'express'
+import { ParamsDictionary } from 'express-serve-static-core'
 import { SetOptional } from 'type-fest'
 
 import { createReqMeta } from '../../../../app/utils/request'
 import { createLoggerWithLabel } from '../../../../config/logger'
-import { WithForm, WithParsedResponses } from '../../../../types'
+import {
+  WithAutoReplyEmailData,
+  WithForm,
+  WithParsedResponses,
+} from '../../../../types'
 import { checkIsEncryptedEncoding } from '../../../utils/encryption'
+import * as SubmissionService from '../submission.service'
 import { getProcessedResponses } from '../submission.service'
+import { ProcessedFieldResponse } from '../submission.types'
 
 import {
   EncryptSubmissionBody,
@@ -83,4 +90,43 @@ export const prepareEncryptSubmission: RequestHandler<
   ;(req as WithAttachmentsData<typeof req>).attachmentData =
     req.body.attachments || {}
   return next()
+}
+
+/**
+ * Sends email confirmations to form-fillers, for email fields which have
+ * email confirmation enabled.
+ * @param req Express request object
+ * @param res Express response object
+ */
+export const sendEmailConfirmations: RequestHandler<
+  ParamsDictionary,
+  unknown,
+  { parsedResponses: ProcessedFieldResponse[] }
+> = async (req, res) => {
+  const {
+    form,
+    attachments,
+    autoReplyData,
+    submission,
+  } = req as WithAutoReplyEmailData<typeof req>
+  // Return the reply early to the submitter
+  res.json({
+    message: 'Form submission successful.',
+    submissionId: submission.id,
+  })
+  return SubmissionService.sendEmailConfirmations({
+    form,
+    parsedResponses: req.body.parsedResponses,
+    submission,
+    attachments,
+    autoReplyData,
+  }).mapErr((error) => {
+    logger.error({
+      message: 'Error while sending email confirmations',
+      meta: {
+        action: 'sendEmailAutoReplies',
+      },
+      error,
+    })
+  })
 }

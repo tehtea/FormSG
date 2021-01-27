@@ -9,6 +9,7 @@ import {
   FieldResponse,
   ResWithHashedFields,
   WithAttachments,
+  WithAutoReplyEmailData,
   WithEmailData,
   WithEmailModeMetadata,
   WithForm,
@@ -16,6 +17,7 @@ import {
 } from '../../../../types'
 import { createReqMeta } from '../../../utils/request'
 import { getProcessedResponses } from '../submission.service'
+import * as SubmissionService from '../submission.service'
 import {
   ProcessedCheckboxResponse,
   ProcessedFieldResponse,
@@ -291,4 +293,43 @@ export const sendAdminEmail: RequestHandler<
         spcpSubmissionFailure: false,
       })
     })
+}
+
+/**
+ * Sends email confirmations to form-fillers, for email fields which have
+ * email confirmation enabled.
+ * @param req Express request object
+ * @param res Express response object
+ */
+export const sendEmailConfirmations: RequestHandler<
+  ParamsDictionary,
+  unknown,
+  { parsedResponses: ProcessedFieldResponse[] }
+> = async (req, res) => {
+  const {
+    form,
+    attachments,
+    autoReplyData,
+    submission,
+  } = req as WithAutoReplyEmailData<typeof req>
+  // Return the reply early to the submitter
+  res.json({
+    message: 'Form submission successful.',
+    submissionId: submission.id,
+  })
+  return SubmissionService.sendEmailConfirmations({
+    form,
+    parsedResponses: req.body.parsedResponses,
+    submission,
+    attachments,
+    autoReplyData,
+  }).mapErr((error) => {
+    logger.error({
+      message: 'Error while sending email confirmations',
+      meta: {
+        action: 'sendEmailAutoReplies',
+      },
+      error,
+    })
+  })
 }

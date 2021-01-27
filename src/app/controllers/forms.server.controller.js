@@ -61,6 +61,7 @@ exports.read = (requestType) =>
    */
   (req, res) => {
     let form = req.form
+    const stripePayment = form.isStripePaymentsEnabled()
     let spcpSession = res.locals.spcpSession
     let myInfoError = res.locals.myInfoError
 
@@ -72,13 +73,16 @@ exports.read = (requestType) =>
 
     // For non-admin forms, we have more extensive scrubbing of irrelevant fields
     if (requestType !== requestTypes.ADMIN) {
-      form = _.pick(form, formPublicFields)
+      form = _.pick(form, formPublicFields) // TODO: don't reassign to a request object!
     }
+
+    // Stripe Payments
 
     return res.json({
       form,
       spcpSession,
       myInfoError,
+      stripePayment,
     })
   }
 

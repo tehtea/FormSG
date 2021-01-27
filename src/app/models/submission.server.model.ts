@@ -162,6 +162,11 @@ const EncryptSubmissionSchema = new Schema<IEncryptedSubmissionSchema>({
     required: true,
   },
   webhookResponses: [webhookResponseSchema],
+  // payments
+  stripeCheckoutSessionId: {
+    required: false,
+    type: Schema.Types.ObjectId,
+  },
 })
 
 /**

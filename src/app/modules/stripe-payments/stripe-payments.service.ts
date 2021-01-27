@@ -1,12 +1,15 @@
+/* eslint-disable typesafe/no-await-without-trycatch */
 import mongoose from 'mongoose'
 
 import { IStripeCheckoutSessionSchema } from 'src/types/stripe_payments'
 
 import stripe from '../../../config/stripe'
 import getStripeCheckoutSessionModel from '../../models/stripe_checkout_session.model'
+import { getEncryptSubmissionModel } from '../../models/submission.server.model'
 
 import { LineItem, StripeAccountId } from './stripe-payments.types'
 
+const EncryptSubmission = getEncryptSubmissionModel(mongoose)
 const StripeCheckoutSession = getStripeCheckoutSessionModel(mongoose)
 
 enum PaymentTypesAllowed {
@@ -22,6 +25,7 @@ enum PaymentTypesAllowed {
 export const createCheckoutSession = async (
   stripeAccount: StripeAccountId,
   lineItem: LineItem,
+  submissionId: string,
 ): Promise<IStripeCheckoutSessionSchema> => {
   if (lineItem.amount < 50)
     throw new Error('Stripe only accepts amounts of at least S$0.50')
@@ -45,5 +49,10 @@ export const createCheckoutSession = async (
       stripeAccount,
     },
   )
-  return StripeCheckoutSession.create(checkoutSessionDTO)
+  const checkoutSession = await StripeCheckoutSession.create(checkoutSessionDTO)
+  await EncryptSubmission.findOneAndUpdate(
+    { _id: submissionId },
+    { stripeCheckoutSessionId: checkoutSession._id },
+  )
+  return checkoutSession
 }

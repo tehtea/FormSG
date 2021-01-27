@@ -31,6 +31,7 @@ export interface ISubmission {
   version?: number
   attachmentMetadata?: Map<string, string>
   webhookResponses?: IWebhookResponse[]
+  stripeCheckoutSessionId?: string
 }
 
 export interface WebhookData {

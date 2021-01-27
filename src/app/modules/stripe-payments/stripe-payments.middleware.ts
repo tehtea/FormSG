@@ -1,6 +1,6 @@
-import { RequestHandler } from 'express'
+import { NextFunction, Request, Response } from 'express'
 
-import { WithForm } from '../../../types'
+import { WithForm, WithSubmission } from '../../../types'
 
 import * as stripePaymentService from './stripe-payments.service'
 import { isCompleteFormStripePayment } from './stripe-payments.types'
@@ -11,12 +11,13 @@ import { isCompleteFormStripePayment } from './stripe-payments.types'
  * @param res
  * @param next
  */
-export const createCheckoutSession: RequestHandler = async (
-  req,
-  res,
-  next,
+export const createCheckoutSession = async (
+  req: WithSubmission<WithForm<Request>>,
+  res: Response,
+  next: NextFunction,
 ): Promise<void> => {
-  const form = (req as WithForm<typeof req>).form
+  const { form, submission } = req
+
   const { stripePayments } = form
 
   if (!isCompleteFormStripePayment(stripePayments)) return next()
@@ -27,8 +28,9 @@ export const createCheckoutSession: RequestHandler = async (
     const stripeCheckoutSession = await stripePaymentService.createCheckoutSession(
       stripeAccount,
       lineItem,
+      String(submission._id),
     )
-    console.log('stripeCheckoutSession', stripeCheckoutSession)
+    req.stripeCheckoutSession = stripeCheckoutSession
     return next()
   } catch (e) {
     console.error(e)

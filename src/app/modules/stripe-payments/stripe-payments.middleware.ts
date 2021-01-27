@@ -24,12 +24,11 @@ export const createCheckoutSession: RequestHandler = async (
   const { stripeAccount, lineItem } = stripePayments
 
   try {
-    const checkoutSession = await stripePaymentService.createCheckoutSession(
+    const stripeCheckoutSession = await stripePaymentService.createCheckoutSession(
       stripeAccount,
       lineItem,
     )
-    console.log('checkoutSession', checkoutSession) // TODO - save in DB
-
+    console.log('stripeCheckoutSession', stripeCheckoutSession)
     return next()
   } catch (e) {
     console.error(e)

@@ -1,8 +1,18 @@
-import Stripe from 'stripe'
+import mongoose from 'mongoose'
+
+import { IStripeCheckoutSessionSchema } from 'src/types/stripe_payments'
 
 import stripe from '../../../config/stripe'
+import getStripeCheckoutSessionModel from '../../models/stripe_checkout_session.model'
 
 import { LineItem, StripeAccountId } from './stripe-payments.types'
+
+const StripeCheckoutSession = getStripeCheckoutSessionModel(mongoose)
+
+enum PaymentTypesAllowed {
+  card = 'card',
+  grabpay = 'grabpay',
+}
 
 /**
  * Creates a checkout session for a single line item in Singapore dollars, for card payments only.
@@ -12,12 +22,13 @@ import { LineItem, StripeAccountId } from './stripe-payments.types'
 export const createCheckoutSession = async (
   stripeAccount: StripeAccountId,
   lineItem: LineItem,
-): Promise<Stripe.Response<Stripe.Checkout.Session>> => {
+): Promise<IStripeCheckoutSessionSchema> => {
   if (lineItem.amount < 50)
     throw new Error('Stripe only accepts amounts of at least S$0.50')
-  return stripe.checkout.sessions.create(
+
+  const checkoutSessionDTO = await stripe.checkout.sessions.create(
     {
-      payment_method_types: ['card'],
+      payment_method_types: Object.values(PaymentTypesAllowed),
       line_items: [
         {
           name: lineItem.name,
@@ -34,4 +45,5 @@ export const createCheckoutSession = async (
       stripeAccount,
     },
   )
+  return StripeCheckoutSession.create(checkoutSessionDTO)
 }

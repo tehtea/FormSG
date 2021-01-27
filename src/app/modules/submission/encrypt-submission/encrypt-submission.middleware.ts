@@ -114,8 +114,11 @@ export const sendEmailConfirmations: RequestHandler<
   res.json({
     message: 'Form submission successful.',
     submissionId: submission.id,
-    stripeCheckoutSessionId: stripeCheckoutSession
-      ? stripeCheckoutSession.id
+    stripeCheckout: stripeCheckoutSession
+      ? {
+          sessionId: stripeCheckoutSession.id,
+          connectedStripeAccountId: form.stripePayments?.stripeAccount,
+        }
       : null,
   })
   return SubmissionService.sendEmailConfirmations({

@@ -127,8 +127,8 @@ function SubmissionsFactory(
         version: body.version,
       })
       .then(
-        function () {
-          deferred.resolve('Submission has finished.')
+        function (response) {
+          deferred.resolve(response)
         },
         function (error) {
           deferred.reject(

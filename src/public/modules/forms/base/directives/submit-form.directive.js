@@ -328,7 +328,7 @@ function submitFormDirective(
        * Returns a callback for form submission success, which updates UI
        * state and Google Analytics.
        */
-      const handleSubmitSuccess = () => {
+      const handleSubmitSuccess = (response) => {
         setFormState(FORM_STATES.SUBMITTED)
         GTag.submitFormSuccess(scope.form, startDate, Date.now())
         if (shouldTrackPersistentLoginUse()) {
@@ -337,6 +337,17 @@ function submitFormDirective(
             SpcpSession.getIssuedAt(),
             Date.now(),
           )
+        }
+        const { stripeCheckout } = response.data
+        if (stripeCheckout) {
+          const { sessionId, connectedStripeAccountId } = stripeCheckout
+
+          const stripe = window.Stripe(window.stripePublishableKey, {
+            stripeAccount: connectedStripeAccountId,
+          })
+          stripe.redirectToCheckout({
+            sessionId,
+          })
         }
       }
 

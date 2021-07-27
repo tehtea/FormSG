@@ -1,7 +1,7 @@
 import MockAxios from 'jest-mock-axios'
 
 import { IPopulatedUser, PublicForm, ResponseMode } from '../../../types'
-import { DuplicateFormBody } from '../../../types/api'
+import { DuplicateFormBodyDto } from '../../../types/api'
 import * as ExamplesService from '../ExamplesService'
 
 jest.mock('axios', () => MockAxios)
@@ -117,7 +117,7 @@ describe('ExamplesService', () => {
       // Assert
       expect(actual).toEqual(expected)
       expect(MockAxios.post).toHaveBeenCalledWith(
-        `${MOCK_FORM_ID}/adminform/copy`,
+        `/api/v3/admin/forms/${MOCK_FORM_ID}/template/copy`,
         MOCK_DUPLICATE_FORM_BODY,
       )
     })
@@ -138,7 +138,7 @@ describe('ExamplesService', () => {
       // Assert
       await expect(actualPromise).rejects.toEqual(expected)
       expect(MockAxios.post).toHaveBeenCalledWith(
-        `${MOCK_FORM_ID}/adminform/copy`,
+        `/api/v3/admin/forms/${MOCK_FORM_ID}/template/copy`,
         MOCK_DUPLICATE_FORM_BODY,
       )
     })
@@ -164,7 +164,7 @@ describe('ExamplesService', () => {
       // Assert
       expect(actual).toEqual(expected)
       expect(MockAxios.get).toHaveBeenCalledWith(
-        `${MOCK_FORM_ID}/adminform/template`,
+        `/api/v3/admin/forms/${MOCK_FORM_ID}/template`,
       )
     })
 
@@ -180,17 +180,17 @@ describe('ExamplesService', () => {
       // Assert
       await expect(actualPromise).rejects.toEqual(expected)
       expect(MockAxios.get).toHaveBeenCalledWith(
-        `${MOCK_FORM_ID}/adminform/template`,
+        `/api/v3/admin/forms/${MOCK_FORM_ID}/template`,
       )
     })
   })
 })
 
 // Utils
-const _generateDuplicateFormBody = (): DuplicateFormBody => {
+const _generateDuplicateFormBody = (): DuplicateFormBodyDto => {
   return {
     title: 'title',
     responseMode: ResponseMode.Email,
     emails: 'test@example.com',
-  } as DuplicateFormBody
+  } as DuplicateFormBodyDto
 }

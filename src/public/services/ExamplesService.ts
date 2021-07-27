@@ -54,7 +54,10 @@ export const useTemplate = async (
   overrideParams: DuplicateFormBodyDto,
 ): Promise<AdminDashboardFormMetaDto> => {
   return axios
-    .post<AdminDashboardFormMetaDto>(`${formId}/adminform/copy`, overrideParams)
+    .post<AdminDashboardFormMetaDto>(
+      `/api/v3/admin/forms/${formId}/template/copy`,
+      overrideParams,
+    )
     .then(({ data }) => data)
 }
 
@@ -67,6 +70,6 @@ export const queryTemplate = async (
   formId: string,
 ): Promise<PreviewFormViewDto> => {
   return axios
-    .get<PreviewFormViewDto>(`${formId}/adminform/template`)
+    .get<PreviewFormViewDto>(`/api/v3/admin/forms/${formId}/template`)
     .then(({ data }) => data)
 }

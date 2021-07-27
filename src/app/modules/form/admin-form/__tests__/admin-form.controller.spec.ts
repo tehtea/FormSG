@@ -3423,7 +3423,7 @@ describe('admin-form.controller', () => {
     })
   })
 
-  describe('handleCopyTemplateForm', () => {
+  describe('__handleCopyTemplateForm', () => {
     const MOCK_USER_ID = new ObjectId().toHexString()
     const MOCK_FORM_ID = new ObjectId().toHexString()
     const MOCK_USER = {
@@ -3476,7 +3476,7 @@ describe('admin-form.controller', () => {
       )
 
       // Act
-      await AdminFormController.handleCopyTemplateForm(
+      await AdminFormController._handleCopyTemplateForm(
         mockReqWithParams,
         mockRes,
         jest.fn(),
@@ -3506,7 +3506,7 @@ describe('admin-form.controller', () => {
       )
 
       // Act
-      await AdminFormController.handleCopyTemplateForm(
+      await AdminFormController._handleCopyTemplateForm(
         MOCK_REQ,
         mockRes,
         jest.fn(),
@@ -3544,7 +3544,7 @@ describe('admin-form.controller', () => {
       )
 
       // Act
-      await AdminFormController.handleCopyTemplateForm(
+      await AdminFormController._handleCopyTemplateForm(
         mockReqWithParams,
         mockRes,
         jest.fn(),
@@ -3577,7 +3577,7 @@ describe('admin-form.controller', () => {
       )
 
       // Act
-      await AdminFormController.handleCopyTemplateForm(
+      await AdminFormController._handleCopyTemplateForm(
         MOCK_REQ,
         mockRes,
         jest.fn(),
@@ -3602,7 +3602,7 @@ describe('admin-form.controller', () => {
       )
 
       // Act
-      await AdminFormController.handleCopyTemplateForm(
+      await AdminFormController._handleCopyTemplateForm(
         MOCK_REQ,
         mockRes,
         jest.fn(),
@@ -3627,7 +3627,7 @@ describe('admin-form.controller', () => {
       )
 
       // Act
-      await AdminFormController.handleCopyTemplateForm(
+      await AdminFormController._handleCopyTemplateForm(
         MOCK_REQ,
         mockRes,
         jest.fn(),
@@ -3655,7 +3655,7 @@ describe('admin-form.controller', () => {
       )
 
       // Act
-      await AdminFormController.handleCopyTemplateForm(
+      await AdminFormController._handleCopyTemplateForm(
         MOCK_REQ,
         mockRes,
         jest.fn(),
@@ -3692,7 +3692,7 @@ describe('admin-form.controller', () => {
       )
 
       // Act
-      await AdminFormController.handleCopyTemplateForm(
+      await AdminFormController._handleCopyTemplateForm(
         mockReqWithParams,
         mockRes,
         jest.fn(),

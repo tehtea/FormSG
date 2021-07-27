@@ -2,51 +2,14 @@
  * Old routes that has not been migrated to their new /api/v3/ root endpoints.
  */
 
-import JoiDate from '@joi/date'
-import { celebrate, Joi as BaseJoi, Segments } from 'celebrate'
 import { Router } from 'express'
 
-import { ResponseMode } from '../../../../types'
-import { DuplicateFormBodyDto } from '../../../../types/api'
 import { withUserAuthentication } from '../../auth/auth.middlewares'
 import * as EncryptSubmissionController from '../../submission/encrypt-submission/encrypt-submission.controller'
 
 import * as AdminFormController from './admin-form.controller'
 
 export const AdminFormsRouter = Router()
-
-const Joi = BaseJoi.extend(JoiDate) as typeof BaseJoi
-
-// Validators
-const duplicateFormValidator = celebrate({
-  [Segments.BODY]: Joi.object<DuplicateFormBodyDto>({
-    // Require valid responsesMode field.
-    responseMode: Joi.string()
-      .valid(...Object.values(ResponseMode))
-      .required(),
-    // Require title field.
-    title: Joi.string().min(4).max(200).required(),
-    // Require emails string (for backwards compatibility) or string array
-    // if form to be duplicated in Email mode.
-    emails: Joi.when('responseMode', {
-      is: ResponseMode.Email,
-      then: Joi.alternatives()
-        .try(Joi.array().items(Joi.string()).min(1), Joi.string())
-        .required(),
-      // TODO (#2264): disallow the 'emails' key when responseMode is not Email
-      // Allow old clients to send this key but optionally and without restrictions
-      // on array length or type
-      otherwise: Joi.alternatives().try(Joi.array(), Joi.string().allow('')),
-    }),
-    // Require publicKey field if form to be duplicated in Storage mode.
-    publicKey: Joi.string()
-      .allow('')
-      .when('responseMode', {
-        is: ResponseMode.Encrypt,
-        then: Joi.string().required().disallow(''),
-      }),
-  }),
-})
 
 AdminFormsRouter.route('/adminform')
   // All HTTP methods of route protected with authentication.
@@ -168,6 +131,7 @@ AdminFormsRouter.post(
 /**
  * Return the template form to the user.
  * Only allows for public forms, for any logged in user.
+ * @deprecated new route is found in admin-forms.template.routes.ts.
  * @route GET /:formId/adminform/template
  * @security session
  *
@@ -186,6 +150,7 @@ AdminFormsRouter.get(
 
 /**
  * Duplicate a specified form and return that form to the user.
+ * @deprecated new route is found in admin-forms.template.routes.ts.
  * @route GET /:formId/adminform/copy
  * @security session
  *
@@ -201,7 +166,6 @@ AdminFormsRouter.get(
 AdminFormsRouter.post(
   '/:formId([a-fA-F0-9]{24})/adminform/copy',
   withUserAuthentication,
-  duplicateFormValidator,
   AdminFormController.handleCopyTemplateForm,
 )
 

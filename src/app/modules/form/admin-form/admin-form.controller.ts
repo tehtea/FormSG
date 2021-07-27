@@ -942,6 +942,7 @@ export const handleGetTemplateForm: ControllerHandler<
 }
 
 /**
+ * Exported for testing.
  * Handler for POST /:formId/adminform/copy
  * Duplicates the form corresponding to the formId. The form must be public to
  * be copied.
@@ -955,7 +956,7 @@ export const handleGetTemplateForm: ControllerHandler<
  * @returns 422 when user in session cannot be retrieved from the database
  * @returns 500 when database error occurs
  */
-export const handleCopyTemplateForm: ControllerHandler<
+export const _handleCopyTemplateForm: ControllerHandler<
   { formId: string },
   AdminDashboardFormMetaDto | ErrorDto,
   DuplicateFormBodyDto
@@ -1002,6 +1003,11 @@ export const handleCopyTemplateForm: ControllerHandler<
       })
   )
 }
+
+export const handleCopyTemplateForm = [
+  duplicateFormValidator,
+  _handleCopyTemplateForm,
+] as ControllerHandler[]
 
 /**
  * Handler for POST /{formId}/adminform/transfer-owner.

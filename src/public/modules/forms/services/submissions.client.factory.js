@@ -121,6 +121,8 @@ function SubmissionsFactory($q, $timeout, $window, GTag) {
               workerPool.push(new DecryptionWorker())
             }
 
+            const start_time = Date.now()
+
             // Configure each worker
             workerPool.forEach((worker) => {
               // When worker returns a decrypted message
@@ -146,6 +148,15 @@ function SubmissionsFactory($q, $timeout, $window, GTag) {
                     console.error('Error in getResponseInstance', error)
                   }
                 }
+
+                const completed =
+                  (csvGenerator.length() + errorCount + unverifiedCount) /
+                  expectedNumResponses
+                const elapsed = Date.now() - start_time
+                const estimed_time = elapsed / completed
+                const eta = start_time + estimed_time
+
+                console.log(`ETA: ${new Date(eta).toISOString()}`)
 
                 if (downloadAttachments && csvRecord.downloadBlob) {
                   triggerFileDownload(

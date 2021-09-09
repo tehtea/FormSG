@@ -5,7 +5,7 @@ import { Badge } from './Badge'
 import { Banner } from './Banner'
 import { Button } from './Button'
 import { Checkbox, CHECKBOX_THEME_KEY } from './Checkbox'
-import { DropdownMenu } from './DropdownMenu'
+import { Menu } from './DropdownMenu'
 import { Form } from './Form'
 import { FormError } from './FormError'
 import { FormLabel } from './FormLabel'
@@ -34,7 +34,7 @@ export const components = {
   Input,
   Link,
   InlineMessage,
-  DropdownMenu,
+  Menu,
   NumberInput,
   PhoneNumberInput,
   Tabs,
